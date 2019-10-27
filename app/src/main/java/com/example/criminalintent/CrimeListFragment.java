@@ -24,7 +24,17 @@ class CrimeListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        updateUi();
+
         return view;
+    }
+
+    private void updateUi() {
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        List<Crime> crimes = crimeLab.getCrimes();
+        CrimeAdapter adapter = new CrimeAdapter(crimes); // link the data to adapter
+        mRecyclerView.setAdapter(adapter); // link the adapter to recyclerView
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder{
