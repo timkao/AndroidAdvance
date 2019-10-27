@@ -23,7 +23,7 @@ class CrimeListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_crime_list, container, false);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.crime_recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
     }
 }
