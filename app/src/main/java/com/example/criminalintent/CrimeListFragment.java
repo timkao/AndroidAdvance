@@ -22,6 +22,7 @@ import java.util.List;
 class CrimeListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
+    private CrimeAdapter mAdapter;
 
     @Nullable
     @Override
@@ -35,11 +36,23 @@ class CrimeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUi();
+    }
+
     private void updateUi() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-        CrimeAdapter adapter = new CrimeAdapter(crimes); // link the data to adapter
-        mRecyclerView.setAdapter(adapter); // link the adapter to recyclerView
+
+        if (mAdapter == null) {
+            mAdapter = new CrimeAdapter(crimes); // link the data to adapter
+            mRecyclerView.setAdapter(mAdapter); // link the adapter to recyclerView
+        } else {
+            mAdapter.notifyDataSetChanged();
+        }
+
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
