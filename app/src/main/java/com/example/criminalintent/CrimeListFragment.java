@@ -23,6 +23,7 @@ class CrimeListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CrimeAdapter mAdapter;
+    private int mLastClickedPosition = -1;
 
     @Nullable
     @Override
@@ -50,7 +51,11 @@ class CrimeListFragment extends Fragment {
             mAdapter = new CrimeAdapter(crimes); // link the data to adapter
             mRecyclerView.setAdapter(mAdapter); // link the adapter to recyclerView
         } else {
-            mAdapter.notifyDataSetChanged();
+            if (mLastClickedPosition < 0) {
+                mAdapter.notifyDataSetChanged();
+            } else {
+                mAdapter.notifyItemChanged(mLastClickedPosition);
+            }
         }
 
     }
@@ -80,6 +85,7 @@ class CrimeListFragment extends Fragment {
 
         @Override
         public void onClick(View view) {
+            mLastClickedPosition = getAdapterPosition();
             Intent crimeIntent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
             startActivity(crimeIntent);
         }
