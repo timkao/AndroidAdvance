@@ -1,7 +1,10 @@
 package com.example.criminalintent;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import java.util.GregorianCalendar;
 public class TimePickFragment extends DialogFragment {
 
     private static String ARG_DATE = "time";
+    public static final String EXTRA_DATE_FOR_TIME = "com.example.criminalintent.datefortime";
     private TimePicker mTimePicker;
 
     public static TimePickFragment newInstance(Date date) {
@@ -45,7 +49,27 @@ public class TimePickFragment extends DialogFragment {
         return new AlertDialog.Builder(getActivity())
                 .setView(v)
                 .setTitle(R.string.time_picker_title)
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int hour = mTimePicker.getCurrentHour();
+                        int minute = mTimePicker.getCurrentMinute();
+                        Date date = (Date) getArguments().getSerializable(ARG_DATE);
+                        date.setHours(hour);
+                        date.setMinutes(minute);
+                        sendResult(Activity.RESULT_OK, date);
+                    }
+                })
                 .create();
+    }
 
+    public void sendResult(int resultCode, Date date) {
+        if (getTargetFragment() == null) {
+            return;
+        }
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_DATE_FOR_TIME, date);
+
+        getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);
     }
 }

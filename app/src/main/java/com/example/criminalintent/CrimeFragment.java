@@ -127,5 +127,11 @@ public class CrimeFragment extends Fragment {
             mCrime.setDate(date);
             mDateButton.setText(mCrime.getDate().toString());
         }
+        if (requestCode == REQUEST_TIME) {
+            Date date = (Date) data.getSerializableExtra(TimePickFragment.EXTRA_DATE_FOR_TIME);
+            mCrime.setDate(date);
+            DateFormat format = new SimpleDateFormat("HH:mm");
+            mTimeButton.setText(format.format(mCrime.getDate()));
+        }
     }
 }
