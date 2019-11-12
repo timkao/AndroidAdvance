@@ -1,5 +1,6 @@
 package com.example.criminalintent;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,9 +65,13 @@ class CrimeListFragment extends Fragment {
         switch(item.getItemId()) {
             case R.id.new_crime:
                 Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
-                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId(), mLastClickedPosition);
+                CrimeLab crimeLab = CrimeLab.get(getActivity());
+                crimeLab.addCrime(crime);
+                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId(), crimeLab.getCrimes().size());
                 startActivity(intent);
+                return true;
+            case R.id.show_subtitle:
+                updateSubtitle();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -87,6 +93,14 @@ class CrimeListFragment extends Fragment {
             }
         }
 
+    }
+
+    private void updateSubtitle() {
+        CrimeLab crimeLab = CrimeLab.get(getActivity());
+        int crimeCount = crimeLab.getCrimes().size();
+        String subtitle = getString(R.string.subtitle_format, crimeCount);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.getSupportActionBar().setSubtitle(subtitle);
     }
 
     private class CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
