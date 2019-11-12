@@ -103,6 +103,8 @@ class CrimeListFragment extends Fragment {
             }
         }
 
+        updateSubtitle();
+
     }
 
     private void updateSubtitle() {
