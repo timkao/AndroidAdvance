@@ -20,19 +20,14 @@ public class CrimeLab {
         return sCrimeLab;
     }
 
+    public void addCrime(Crime c) {
+        mCrimes.add(c);
+        crimeMap.put(c.getId(), c);
+    }
+
     private CrimeLab(Context context) {
         mCrimes = new ArrayList<>();
         crimeMap = new HashMap<>();
-        for (int i = 0; i < 100; i++) {
-            Crime crime = new Crime();
-            crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0);
-            if (i % 11 == 12) {
-                crime.setRequiredPolice(true);
-            }
-            mCrimes.add(crime);
-            crimeMap.put(crime.getId(), crime);
-        }
     }
 
     public List<Crime> getCrimes() {
