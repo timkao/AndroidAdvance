@@ -34,6 +34,16 @@ public class Crime {
     private Date mDate;
     private boolean mSolved;
 
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String mSuspect) {
+        this.mSuspect = mSuspect;
+    }
+
+    private String mSuspect;
+
     public boolean isRequiredPolice() {
         return mRequiredPolice;
     }
