@@ -19,6 +19,17 @@
             android:parentActivityName=".CrimeListActivity"
             android:name=".CrimePagerActivity">
         </activity>
+        <provider
+            android:grantUriPermissions="true"
+            android:exported="false"
+            android:authorities="com.example.criminalintent.fileprovider"
+            android:name="androidx.core.content.FileProvider">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files"
+                />
+
+        </provider>
     </application>
 
 </manifest>

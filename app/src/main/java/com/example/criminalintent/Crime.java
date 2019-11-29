@@ -67,4 +67,8 @@ public class Crime {
         return mId;
     }
 
+    public String getPhotoFilename() {
+        return "IMG_" + getId().toString() + ".jpg";
+    }
+
 }
