@@ -204,13 +204,14 @@ class CrimeListFragment extends Fragment {
      *  Required interface for hosting activities
      */
     public interface Callbacks {
+        // inform host activity what to do to host me
         void onCrimeSelected(Crime crime, int lastClickedPosition);
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        mCallbacks = (Callbacks) context;
+        mCallbacks = (Callbacks) context; // link host activity to this fragment
     }
 
     @Override
