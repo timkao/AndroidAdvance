@@ -15,7 +15,7 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.Callbacks {
 
     public static final String EXTRA_CRIME_ID = "crime_id";
     public static final String EXTRA_POSITION = "position";
@@ -56,7 +56,9 @@ public class CrimePagerActivity extends AppCompatActivity {
             }
         });
         mViewPager.setCurrentItem(position);
+    }
 
-
+    @Override
+    public void onCrimeUpdated(Crime crime) {
     }
 }
