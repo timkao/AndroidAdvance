@@ -31,6 +31,7 @@ class CrimeListFragment extends Fragment {
     private int mLastClickedPosition = -1;
     private boolean mSubtitleVisible;
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+    private Callbacks mCallbacks;
 
     @Nullable
     @Override
@@ -80,8 +81,8 @@ class CrimeListFragment extends Fragment {
                 Crime crime = new Crime();
                 CrimeLab crimeLab = CrimeLab.get(getActivity());
                 crimeLab.addCrime(crime);
-                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getId(), crimeLab.getCrimes().size());
-                startActivity(intent);
+                updateUi();
+                mCallbacks.onCrimeSelected(crime, -1);
                 return true;
             case R.id.show_subtitle:
                 mSubtitleVisible = !mSubtitleVisible;
@@ -156,8 +157,7 @@ class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             mLastClickedPosition = getAdapterPosition();
-            Intent crimeIntent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId(), mLastClickedPosition);
-            startActivity(crimeIntent);
+            mCallbacks.onCrimeSelected(mCrime, mLastClickedPosition);
         }
     }
 
@@ -200,5 +200,22 @@ class CrimeListFragment extends Fragment {
         }
     }
 
+    /**
+     *  Required interface for hosting activities
+     */
+    public interface Callbacks {
+        void onCrimeSelected(Crime crime, int lastClickedPosition);
+    }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 }
